@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        Número: <input type="text" name="input" id="input">
+    </form>
+    <div id="response"></div>
+    <script>
+        const form = document.querySelector('form');
+        const onFormSubmit = (e) => {
+            e.preventDefault();
+            const input = document.querySelector('#input');
+            const value = input.value;
+            const url = `http://localhost:4567/notas`;
+
+            // fetch post
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nota: value })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const response = document.querySelector('#response');
+                    response.innerHTML = JSON.stringify(data);
+                });
+        };
+        form.addEventListener('submit', onFormSubmit);
+    </script> 
+</body>
+</html>
